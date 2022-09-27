@@ -88,8 +88,8 @@ jobs:
           mv BlackHole.driver ./MuseAudioShare.driver
           /usr/bin/codesign -s 'Developer ID Application: Muse App LLC (P99CTB3BP8)' --timestamp -f \
             --options=runtime ./MuseAudioShare.driver
-          tar -cvzf MuseAudioShare.driver.tar.gz ./MuseAudioShare.driver
-          cp MuseAudioShare.driver.tar.gz "MuseAudioShare-$TAG.driver.tar.gz"
+          tar -cvzf MuseAudioShare-x64-latest.driver.tar.gz ./MuseAudioShare.driver
+          cp MuseAudioShare-x64-latest.driver.tar.gz "MuseAudioShare-x64-$TAG.driver.tar.gz"
 
           # remove artefacts
           rm -r BlackHole*
@@ -117,8 +117,8 @@ jobs:
           mv BlackHole.driver ./MuseDAWBridge.driver
           /usr/bin/codesign -s 'Developer ID Application: Muse App LLC (P99CTB3BP8)' --timestamp -f \
              --options=runtime ./MuseDAWBridge.driver
-          tar -cvzf MuseDAWBridge.driver.tar.gz MuseDAWBridge.driver
-          cp MuseDAWBridge.driver.tar.gz "MuseDAWBridge-$TAG.driver.tar.gz"
+          tar -cvzf MuseDAWBridge-x64-latest.driver.tar.gz MuseDAWBridge.driver
+          cp MuseDAWBridge-x64-latest.driver.tar.gz "MuseDAWBridge-x64-$TAG.driver.tar.gz"
 
           # remove artefacts
           rm -r BlackHole*
@@ -127,6 +127,9 @@ jobs:
 
       - name: Run xcodebuild (Muse Recording)
         run: |
+          # Setting `kHas_Driver_Name_Format=false` ensures that the device UID is "MuseAudioShare_UID"
+          # (see source at BlackHole.h). The device UID must be "MuseAudioShare_UID" because the app
+          # uses the uid to identify the device.
           xcodebuild -project BlackHole.xcodeproj \
             -configuration Release \
             -target BlackHole \
@@ -141,12 +144,12 @@ jobs:
 
           TAG=`plutil -extract CFBundleShortVersionString raw ./BlackHole.driver/Contents/Info.plist`
           echo "TAG=$TAG"
-
+          
           mv BlackHole.driver ./MuseRecording.driver
           /usr/bin/codesign -s 'Developer ID Application: Muse App LLC (P99CTB3BP8)' --timestamp -f \
             --options=runtime ./MuseRecording.driver
-          tar -cvzf MuseRecording.driver.tar.gz MuseRecording.driver
-          cp MuseRecording.driver.tar.gz "MuseRecording-$TAG.driver.tar.gz"
+          tar -cvzf MuseRecording-x64-latest.driver.tar.gz ./MuseRecording.driver
+          cp MuseRecording-x64-latest.driver.tar.gz "MuseRecording-x64-$TAG.driver.tar.gz"
 
           # remove artefacts
           rm -r BlackHole*
@@ -163,5 +166,8 @@ jobs:
 
       - name: Upload the artefacts to musecdn
         run: |
-          s3cmd put ./build/Muse*.driver.tar.gz --acl-public s3://musecdn/muse-app/accessories/darwin-x64/
+          s3cmd del s3://musecdn/muse-app/accessories/darwin/audio-drivers/MuseAudioShare-x64-latest.driver.tar.gz
+          s3cmd del s3://musecdn/muse-app/accessories/darwin/audio-drivers/MuseDAWBridge-x64-latest.driver.tar.gz
+          s3cmd del s3://musecdn/muse-app/accessories/darwin/audio-drivers/MuseRecording-x64-latest.driver.tar.gz
+          s3cmd put ./build/Muse*.driver.tar.gz --acl-public s3://musecdn/muse-app/accessories/darwin/audio-drivers/
 
