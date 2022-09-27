@@ -103,7 +103,7 @@ jobs:
             PRODUCT_BUILD_IDENTIFIER=co.musesessions.audiodrivers.darwin.musedawbridge \
             DEVELOPMENT_TEAM=P99CTB3BP8 \
             CODE_SIGN_IDENTITY='Developer ID Application: Muse App LLC (P99CTB3BP8)' \
-            GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels=2 kPlugIn_BundleID=\"co.musesessions.audiodrivers.darwin.musedawbridge\" kDriver_Name=\"MuseDAWBridge\" kDevice_Name=\"Muse\ Audio\ Share\" kEnableVolumeControl=false kHas_Driver_Name_Format=false'
+            GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels=2 kPlugIn_BundleID=\"co.musesessions.audiodrivers.darwin.musedawbridge\" kDriver_Name=\"MuseDAWBridge\" kDevice_Name=\"Muse\ DAW\ Bridge\" kEnableVolumeControl=false kHas_Driver_Name_Format=false'
 
           cd ./build
 
@@ -128,7 +128,7 @@ jobs:
             PRODUCT_BUILD_IDENTIFIER=co.musesessions.audiodrivers.darwin.muserecording \
             DEVELOPMENT_TEAM=P99CTB3BP8 \
             CODE_SIGN_IDENTITY='Developer ID Application: Muse App LLC (P99CTB3BP8)' \
-            GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels=2 kPlugIn_BundleID=\"co.musesessions.audiodrivers.darwin.muserecording\" kDriver_Name=\"MuseRecording\" kDevice_Name=\"Muse\ Audio\ Share\" kEnableVolumeControl=false kHas_Driver_Name_Format=false'
+            GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels=2 kPlugIn_BundleID=\"co.musesessions.audiodrivers.darwin.muserecording\" kDriver_Name=\"MuseRecording\" kDevice_Name=\"Muse\ Recording\" kEnableVolumeControl=false kHas_Driver_Name_Format=false'
 
           cd ./build
 
@@ -154,7 +154,4 @@ jobs:
       - name: Upload the artefacts to musecdn
         run: |
           s3cmd put ./build/Muse*.driver.tar.gz --acl-public s3://musecdn/muse-app/accessories/darwin-x64/
-          # s3cmd put ./build/MuseAudioShare.driver.tar.gz --acl-public s3://musecdn/muse-app/accessories/darwin-x64/MuseAudioShare.driver.tar.gz
-          # s3cmd put ./build/MuseDAWBridge.driver.tar.gz --acl-public s3://musecdn/muse-app/accessories/darwin-x64/MuseDAWBridge.driver.tar.gz
-          # s3cmd put ./build/MuseRecording.driver.tar.gz --acl-public s3://musecdn/muse-app/accessories/darwin-x64/MuseRecording.driver.tar.gz
 
