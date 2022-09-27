@@ -75,7 +75,7 @@ jobs:
             -target BlackHole \
             CONFIGURATION_BUILD_DIR=build \
             CODE_SIGN_STYLE="Manual" \
-            PRODUCT_BUILD_IDENTIFIER=co.musesessions.audiodrivers.darwin.museaudioshare \
+            PRODUCT_BUNDLE_IDENTIFIER=co.musesessions.audiodrivers.darwin.museaudioshare \
             DEVELOPMENT_TEAM=P99CTB3BP8 \
             CODE_SIGN_IDENTITY='Developer ID Application: Muse App LLC (P99CTB3BP8)' \
             GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels=2 kPlugIn_BundleID=\"co.musesessions.audiodrivers.darwin.museaudioshare\" kDriver_Name=\"MuseAudioShare\" kDevice_Name=\"Muse\ Audio\ Share\" kEnableVolumeControl=false kHas_Driver_Name_Format=false'
@@ -91,16 +91,20 @@ jobs:
           tar -cvzf MuseAudioShare.driver.tar.gz ./MuseAudioShare.driver
           cp MuseAudioShare.driver.tar.gz "MuseAudioShare-$TAG.driver.tar.gz"
 
+          # remove artefacts
+          rm -r BlackHole*
+
           ls -lah
 
       - name: Run xcodebuild (Muse DAW Bridge)
         run: |
+
           xcodebuild -project BlackHole.xcodeproj \
             -configuration Release \
             -target BlackHole \
             CONFIGURATION_BUILD_DIR=build \
             CODE_SIGN_STYLE="Manual" \
-            PRODUCT_BUILD_IDENTIFIER=co.musesessions.audiodrivers.darwin.musedawbridge \
+            PRODUCT_BUNDLE_IDENTIFIER=co.musesessions.audiodrivers.darwin.musedawbridge \
             DEVELOPMENT_TEAM=P99CTB3BP8 \
             CODE_SIGN_IDENTITY='Developer ID Application: Muse App LLC (P99CTB3BP8)' \
             GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels=2 kPlugIn_BundleID=\"co.musesessions.audiodrivers.darwin.musedawbridge\" kDriver_Name=\"MuseDAWBridge\" kDevice_Name=\"Muse\ DAW\ Bridge\" kEnableVolumeControl=false kHas_Driver_Name_Format=false'
@@ -116,6 +120,9 @@ jobs:
           tar -cvzf MuseDAWBridge.driver.tar.gz MuseDAWBridge.driver
           cp MuseDAWBridge.driver.tar.gz "MuseDAWBridge-$TAG.driver.tar.gz"
 
+          # remove artefacts
+          rm -r BlackHole*
+
           ls -lah
 
       - name: Run xcodebuild (Muse Recording)
@@ -125,7 +132,7 @@ jobs:
             -target BlackHole \
             CONFIGURATION_BUILD_DIR=build \
             CODE_SIGN_STYLE="Manual" \
-            PRODUCT_BUILD_IDENTIFIER=co.musesessions.audiodrivers.darwin.muserecording \
+            PRODUCT_BUNDLE_IDENTIFIER=co.musesessions.audiodrivers.darwin.muserecording \
             DEVELOPMENT_TEAM=P99CTB3BP8 \
             CODE_SIGN_IDENTITY='Developer ID Application: Muse App LLC (P99CTB3BP8)' \
             GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels=2 kPlugIn_BundleID=\"co.musesessions.audiodrivers.darwin.muserecording\" kDriver_Name=\"MuseRecording\" kDevice_Name=\"Muse\ Recording\" kEnableVolumeControl=false kHas_Driver_Name_Format=false'
@@ -140,6 +147,9 @@ jobs:
             --options=runtime ./MuseRecording.driver
           tar -cvzf MuseRecording.driver.tar.gz MuseRecording.driver
           cp MuseRecording.driver.tar.gz "MuseRecording-$TAG.driver.tar.gz"
+
+          # remove artefacts
+          rm -r BlackHole*
 
           ls -lah
 
